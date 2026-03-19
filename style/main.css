@@ -124,4 +124,7 @@ footer {
     .mobile-nav {
         display: none !important;
     }
+  
+.card {
+    background-color: hotpink;
 }
