@@ -1,5 +1,6 @@
 import { db, msgRef } from "./firebaseconfig.js";
 import { get, push, ref, query, orderByChild, onValue, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
+import { censorBadWords } from "./censor.js";
 
 const messageContainer = document.querySelector('#messages-display');
 const renderedNotes = new Set();
@@ -103,15 +104,15 @@ openBtn.addEventListener('click', () => {
 const form = document.querySelector('#msgForm');
 const input = document.querySelector('#messageInput');
 
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    const text = input.value;
+  const text = input.value.trim();
+  if (!text) return;
 
-    if (!text) return;
+  const censoredText = censorBadWords(text);
 
-    await addMsg(text);       
-
-    form.reset();
-    card.classList.add('hidden');
+  await addMsg(censoredText);
+  form.reset();
+  card.classList.add("hidden");
 });
