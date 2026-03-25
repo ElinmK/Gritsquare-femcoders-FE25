@@ -2,6 +2,8 @@ import { db, msgRef } from "./firebaseconfig.js";
 import { push, ref, query, orderByChild, onValue, serverTimestamp, runTransaction, remove } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
 import { censorBadWords } from "./censor.js";
 import { searchGifs, displayGifResults, getSelectedGif, clearSelectedGif } from "./gifapi.js";
+import { selectedColor, initColorPicker } from "./colorchange.js";
+
 
 const notifSound = document.getElementById("notifSound");
 const messageContainer = document.querySelector('#messages-display');
@@ -39,7 +41,7 @@ export function liveUpdate() {
             messageList.reverse().forEach((entry) => {
                 const id = entry[0];
                 const message = entry[1]
-                render(message.text, id, message.createdAt, message.likes || 0, message.gifUrl);
+                render(message.text, id, message.createdAt, message.likes || 0, message.gifUrl, message.color);
             });
         }
         else {
@@ -51,12 +53,13 @@ export function liveUpdate() {
 liveUpdate();
 
 //funktion som lägger till data i firebase
-export async function addMsg(text, gifUrl) {
+export async function addMsg(text, gifUrl, color) {
     const resultData = {
             text: text,
             createdAt: serverTimestamp(),
             likes: 0,
             gifUrl: gifUrl,
+            color: selectedColor
         };
 
         const result = await push(msgRef, resultData);
@@ -64,9 +67,13 @@ export async function addMsg(text, gifUrl) {
     }
 
 //function som lägger till DOM-element
-function render(text, id, createdAt, likes, gifUrl) {
+function render(text, id, createdAt, likes, gifUrl, color) {
     const noteCard = document.createElement('article');
     noteCard.classList.add('post-it')
+
+     if (color) {
+        noteCard.style.backgroundColor = color;
+    }
     
     const newPost = createdAt && (Date.now() - createdAt) < 5000;
     if (newPost && !renderedNotes.has(id)) {
@@ -212,7 +219,7 @@ form.addEventListener("submit", async (e) => {
 
   const censoredText = censorBadWords(text);
 
-  await addMsg(censoredText, gifUrl);
+  await addMsg(censoredText, gifUrl, selectedColor);
 
   form.reset();
   card.classList.add("hidden");
@@ -267,3 +274,6 @@ form.addEventListener("submit", async (e) => {
 
        
     }
+
+
+initColorPicker();
