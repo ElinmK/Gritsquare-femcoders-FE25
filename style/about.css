@@ -65,8 +65,6 @@ footer {
     flex-direction: row;
     align-items: center;
     gap: 1rem;
-    gap: 30px;
-    align-items: flex-start;
     justify-content: center;
 }
 
@@ -124,3 +122,8 @@ footer {
 body.dark {
     color:white;
 }
+body.dark .about-box {
+    color:white;
+    background-color: var(--darkPeach);
+}
+
