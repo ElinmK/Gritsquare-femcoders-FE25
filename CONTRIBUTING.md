@@ -16,5 +16,5 @@ Jag är med i klassdiscorden.
 9. Man kan reporta ett meddelande om det inte följer guidelines
 10. Lägga till animation på backgrund, text, anything
 11. Lägg till så man kan tjäna poäng genom likes och sedan unlockas superlike eller något liknande exclusivt
-12. Notification ljud och animation när nytt meddelande kommer upp
+12. ~~Notification ljud och animation när nytt meddelande kommer upp~~
 
