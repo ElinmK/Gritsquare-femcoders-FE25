@@ -73,4 +73,7 @@ Add emojis to messages [Jack](https://github.com/jackgustafsson)
 
 Anti-spam and translate button [Ali](https://github.com/Hammadi15)
 
+Text limiter [Isabelle](https://github.com/isabelleLj)
+
+
 ## Sources
